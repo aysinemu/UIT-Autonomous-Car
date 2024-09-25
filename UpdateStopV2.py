@@ -394,7 +394,7 @@ if __name__ == "__main__":
                         print(stop)
                         stop = 0
                 else:
-                    AVControl( speed=25 , angle = angle_setpoint )
+                    AVControl( speed=30 , angle = angle_setpoint )
             # if mode == 1:
             #     for i in range(4000):
             #         AVControl( speed=30 , angle = 0 )
