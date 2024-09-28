@@ -402,21 +402,21 @@ if __name__ == "__main__":
             #     if t == 30:
             #         t = 0
             if mode == 2:
-                pidd = PIDD(Kp=2.2, Ki=0, Kd=0, setpoint=9)
+                pidd = PIDD(Kp=2.2, Ki=0, Kd=0, setpoint=10)
                 speed = int(state['Speed'])
                 control_output = pidd.compute(speed)
                 set_motor_speed(control_output)
                 AVControl( speed=current_speed , angle = angle_setpoint )
                 left = 1
             if mode == 3:
-                pidd = PIDD(Kp=2.2, Ki=0, Kd=0, setpoint=9)
+                pidd = PIDD(Kp=2.2, Ki=0, Kd=0, setpoint=10)
                 speed = int(state['Speed'])
                 control_output = pidd.compute(speed)
                 set_motor_speed(control_output)
                 AVControl( speed=current_speed , angle = angle_setpoint )
                 right = 1
             if mode == 4:
-                pidd = PIDD(Kp=2.2, Ki=0, Kd=0, setpoint=9)
+                pidd = PIDD(Kp=2.2, Ki=0, Kd=0, setpoint=10)
                 speed = int(state['Speed'])
                 control_output = pidd.compute(speed)
                 set_motor_speed(control_output)
