@@ -66,15 +66,9 @@ def Midlane(image):
     result = results[0]
 
     for idx, mask in enumerate(result.masks.xy):
-        if result.boxes.xyxy.shape[0] > 0:
-            if idx < result.boxes.xyxy.shape[0]:
-                x1, y1, x2, y2 = result.boxes.xyxy[idx].cpu().numpy().astype(int)
-                center_of_road = math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2))/2
-            else:
-                center_of_road = image.shape[1]//2
-        else:
-            center_of_road = image.shape[1]//2
-
+        x1, y1, x2, y2 = result.boxes.xyxy[idx].cpu().numpy().astype(int)
+	center_of_road = math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2))/2
+	    
     return abs(center_of_road)
 
 
