@@ -185,33 +185,33 @@ if __name__ == "__main__":
                 center_of_road = 160
             if mode == 0:
                 if left == 1 and frame >= 8:
-                    AVControl( speed=30 , angle = -10 )
+                    AVControl( speed=30 , angle = -9 )
                     print("Turn Left Now")
-                    if abs(deviation) >= 18:
+                    if abs(deviation) >= 12:
                         print("Turn Left Done")
                         left = 0
                 elif right == 1 and frame >= 8:
-                    AVControl( speed=30 , angle = 10 )
+                    AVControl( speed=30 , angle = 9 )
                     print("Turn Right Now")
-                    if abs(deviation) >= 18:
+                    if abs(deviation) >= 12:
                         print("Turn Right Done")
                         right = 0
                 elif stop == 1 and frame >= 8:
                     AVControl( speed=0 , angle = 0 )
                     print("Stop Now")
-                    if abs(deviation) >= 18:
+                    if abs(deviation) >= 12:
                         print("Stop Done")
                         stop = 0
                 elif left_red == 1 and frame >= 8:
-                    AVControl( speed=30 , angle = -10 )
+                    AVControl( speed=30 , angle = -9 )
                     print("Turn Left Now")
-                    if abs(deviation) >= 18:
+                    if abs(deviation) >= 12:
                         print("Turn Left Done")
                         left_red = 0
                 elif right_red == 1 and frame >= 8:
-                    AVControl( speed=30 , angle = 10 )
+                    AVControl( speed=30 , angle = 9 )
                     print("Turn Right Now")
-                    if abs(deviation) >= 18:
+                    if abs(deviation) >= 12:
                         print("Turn Right Done")
                         right_red = 0
                 else:
