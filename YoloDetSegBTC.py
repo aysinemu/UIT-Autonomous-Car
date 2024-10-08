@@ -160,79 +160,58 @@ if __name__ == "__main__":
             state = GetStatus()
             raw_image = GetRaw()
             segment_image = GetSeg()
-            # crop = GetSeg()
-            # crop = crop[90:180,:]
-            # cv2.imshow('segment_image',segment_image)
             center_of_road = Midlane(segment_image)
             center_of_image = segment_image.shape[1] // 2
             deviation = center_of_road - (segment_image.shape[1] // 2)
             angle_setpoint = PID(deviation, p=0.52, i=0.02, d=0.12)
-                # cv2.imshow('circle',circle)
             if segment(raw_image) == "TurnRight":
-                    # cv2.imshow('Right',br)
-                    print("Getting Ready To Turn Right")
-                    mode = 3
+                print("Getting Ready To Turn Right")
+                mode = 3
             elif segment(raw_image) == "TurnLeft":
-                    # cv2.imshow('Left',bl)
-                    print("Getting Ready To Turn Left")
-                    mode = 2
+                print("Getting Ready To Turn Left")
+                mode = 2
             elif segment(raw_image) == "NoTurnRight":
-                    # cv2.imshow('Left',rr)
-                    print("Getting Ready To Turn Left")
-                    mode = 6
+                print("Getting Ready To Turn Left")
+                mode = 6
             elif segment(raw_image) == "NoTurnLeft":
-                    # cv2.imshow('Right',rl)
-                    print("Getting Ready To Turn Right")
-                    mode = 5
+                print("Getting Ready To Turn Right")
+                mode = 5
             elif segment(raw_image) == "Stop":
-                    # cv2.imshow('Stop',rs)
-                    print("Getting Ready To Stop")
-                    mode = 4
+                print("Getting Ready To Stop")
+                mode = 4
             else:
-                    mode = 0
-            # print(state)
-            # resize = cv2.resize(GetRaw(), (800,800))
-            # cv2.imshow('raw_image', raw_image)
-            # cv2.imshow('segment_image', segment_image)
-            # cv2.imshow('crop', crop)
-
-            # maxspeed = 90, max steering angle = 25
+                mode = 0
             if center_of_road == 95:
                 center_of_road = 160
             if mode == 0:
                 if left == 1 and frame >= 8:
-                    AVControl( speed=30 , angle = -9 )
+                    AVControl( speed=30 , angle = -10 )
                     print("Turn Left Now")
                     if abs(deviation) >= 18:
-                        # print(left)
                         print("Turn Left Done")
                         left = 0
                 elif right == 1 and frame >= 8:
-                    AVControl( speed=30 , angle = 9 )
+                    AVControl( speed=30 , angle = 10 )
                     print("Turn Right Now")
                     if abs(deviation) >= 18:
-                        # print(right)
                         print("Turn Right Done")
                         right = 0
                 elif stop == 1 and frame >= 8:
                     AVControl( speed=0 , angle = 0 )
                     print("Stop Now")
                     if abs(deviation) >= 18:
-                        # print(stop)
                         print("Stop Done")
                         stop = 0
                 elif left_red == 1 and frame >= 8:
-                    AVControl( speed=30 , angle = -9 )
+                    AVControl( speed=30 , angle = -10 )
                     print("Turn Left Now")
                     if abs(deviation) >= 18:
-                        # print(left)
                         print("Turn Left Done")
                         left_red = 0
                 elif right_red == 1 and frame >= 8:
-                    AVControl( speed=30 , angle = 9 )
+                    AVControl( speed=30 , angle = 10 )
                     print("Turn Right Now")
                     if abs(deviation) >= 18:
-                        # print(right)
                         print("Turn Right Done")
                         right_red = 0
                 else:
@@ -242,12 +221,6 @@ if __name__ == "__main__":
                         frame = 0
                     elif frame >= 10:
                         frame = 10
-            # if mode == 1:
-            #     for i in range(4000):
-            #         AVControl( speed=30 , angle = 0 )
-            #         t = t+1
-            #     if t == 30:
-            #         t = 0
             if mode == 2:
                 pidd = PIDD(Kp=1, Ki=0, Kd=0, setpoint=10)
                 speed = int(state['Speed'])
