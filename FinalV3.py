@@ -5,7 +5,9 @@ import time
 import math
 from ultralytics import YOLO
 
-model = YOLO("/workspace/trainnew/train/weights/best.pt")
+model = YOLO("/workspace/DangTrainHetPin/weights/best.pt")
+# model = YOLO("/workspace/trainnew/train/weights/best.pt")
+# model = YOLO("/workspace/SignDetect/weights/best.pt")
 
 detect_circle_bool = 0 # 0 False 1 True
 center_sign_x = 0
@@ -204,7 +206,7 @@ def segment(link):
     # if you want all classes
     # yolo_classes = list(model.names.values())
     # classes_ids = [yolo_classes.index(clas) for clas in yolo_classes]
-    conf = 0.8
+    conf = 0.75
 
     results = model.predict(link, conf=conf)
     # colors = [255,255,255]
@@ -240,7 +242,8 @@ frameredleft = 0
 left_red = 0
 right_red = 0
 yolo = 0
-turn = 16.6
+turn = 16.578
+# turn = 10.2
 devi = 15
 timer = 0
 
@@ -283,39 +286,39 @@ if __name__ == "__main__":
             if secondpoint == 35:
                 forward = 1
             if mode == 0:
-                if frameleft > (frameredright+frameredleft+frameright+framestop):
+                if frameleft > (frameredright+frameredleft+frameright+framestop) and frameleft >= 3:
                     AVControl( speed=30 , angle = -turn )
-                    print("Turn Left Now")
+                    # print("Turn Left Now")
                     if abs(deviation) >= devi:
                         print("Turn Left Done")
                         frameleft = 0
-                elif frameright > (frameredright+frameredleft+frameleft+framestop):
+                elif frameright > (frameredright+frameredleft+frameleft+framestop) and frameright >= 3:
                     AVControl( speed=30 , angle = turn )
-                    print("Turn Right Now")
+                    # print("Turn Right Now")
                     if abs(deviation) >= devi:
                         print("Turn Right Done")
                         frameright = 0
-                elif framestop > (frameredright+frameredleft+frameright+frameleft):
+                elif framestop > (frameredright+frameredleft+frameright+frameleft) and framestop >= 3:
                     # AVControl( speed=0 , angle = 0 )
                     # print("Stop Now")
                     # timer = timer + 1
                     # if abs(timer) >= 10:
                     #     print("Stop Done")
                     framestop = 0
-                elif frameredleft > (frameredright+frameleft+frameright+framestop):
+                elif frameredleft > (frameredright+frameleft+frameright+framestop) and frameredleft >= 3:
                     if forward == 1:
                         AVControl( speed=30 , angle = -turn )
-                        print("Turn Left Now")
+                        # print("Turn Left Now")
                         if abs(deviation) >= devi:
                             print("Turn Left Done")
                             frameredleft = 0
                             forward = 0
                     else:
                         frameredleft = 0
-                elif frameredright > (frameright+frameredleft+frameright+framestop):
+                elif frameredright > (frameright+frameredleft+frameright+framestop) and frameredright >= 3:
                     if forward == 1:
                         AVControl( speed=30 , angle = turn )
-                        print("Turn Right Now")
+                        # print("Turn Right Now")
                         if abs(deviation) >= devi:
                             print("Turn Right Done")
                             frameredright = 0
@@ -323,7 +326,8 @@ if __name__ == "__main__":
                     else:
                         frameredright = 0
                 else:
-                    AVControl( speed=20 , angle = angle_setpoint )     
+                    AVControl( speed=18 , angle = angle_setpoint ) 
+                    # AVControl( speed=30 , angle = angle_setpoint )     
                     forward = 0    
             if mode == 2:
                 pidd = PIDD(Kp=1, Ki=0, Kd=0, setpoint=10)
@@ -348,7 +352,7 @@ if __name__ == "__main__":
                 if abs(timer) >= 30:
                     pidd = PIDD(Kp=1, Ki=0, Kd=0, setpoint=10)
                 else:
-                    pidd = PIDD(Kp=1, Ki=0, Kd=0, setpoint=0)
+                    pidd = PIDD(Kp=99999999999999, Ki=0, Kd=0, setpoint=0)
                 print("Đang dừng lại 10s nha BTC =))) thấy stop sớm nên dừng sớm cho chắc :>>>")
                 speed = int(state['Speed'])
                 control_output = pidd.compute(speed)
@@ -377,17 +381,17 @@ if __name__ == "__main__":
                 # right_red = 1
             # print("|  center_of_road = ",center_of_road)
             # print("|  center_of_image = ",center_of_image)
-            print("|  deviation = ",deviation)
-            print("|  frameleft = ",frameleft)
-            print("|  frameright = ",frameright)
-            print("|  framestop = ",framestop)
-            print("|  frameredleft = ",frameredleft)
-            print("|  frameredright = ",frameredright)
-            print("|  yolo = ",yolo)
-            print("|  timer = ",timer)
-            print("|  forward = ",forward)
+            # print("|  deviation = ",deviation)
+            # print("|  frameleft = ",frameleft)
+            # print("|  frameright = ",frameright)
+            # print("|  framestop = ",framestop)
+            # print("|  frameredleft = ",frameredleft)
+            # print("|  frameredright = ",frameredright)
+            # print("|  yolo = ",yolo)
+            # print("|  timer = ",timer)
+            # print("|  forward = ",forward)
             # print("|  angle_setpoint = ",angle_setpoint)
-            print("---------------------------------------")
+            # print("---------------------------------------")
             # print("Car x = ",segment_image.shape[1] // 2) #y=160
             # 0.3 0.01 0.05 Best condition 30
             #     0.06 0.14
