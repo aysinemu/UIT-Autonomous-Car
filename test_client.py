@@ -103,14 +103,12 @@ def PID(error, p, i, d):
     P = error * p
     delta_t = time.time() - pre_t
     pre_t = time.time()
-    # Tránh việc chia cho 0 để bớt xuất hiện lỗi NaN
     if delta_t != 0:
         D = (error - error_arr[1]) / delta_t * d
     else:
         D = 0
     I = np.sum(error_arr) * delta_t * i
     angle = P + I + D
-    # Đưa về giá trị tuyết đối
     if abs(angle) > 25:
         angle = np.sign(angle) * 25
     return int(angle)
@@ -173,15 +171,12 @@ def Midlane(image):
     return center_of_road - 65
 
 def apply_roi(img, roi):
-    # resize ROI to match the original image size
     roi = cv2.resize(src=roi, dsize=(img.shape[1], img.shape[0]))
     
     assert img.shape[:2] == roi.shape[:2]
     
-    # scale ROI to [0, 1] => binary mask
     thresh, roi = cv2.threshold(roi, thresh=128, maxval=1, type=cv2.THRESH_BINARY)
     
-    # apply ROI on the original image
     new_img = img * roi
     return new_img
 
